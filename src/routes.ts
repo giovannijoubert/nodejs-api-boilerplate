@@ -13,7 +13,6 @@ fs.readdirSync(routePath).forEach(async function (module) {
     if (process.env.NODE_ENV === 'production') {
       route = './dist/modules/' + module + '/routes/' + module + 'Routes.js';
     }
-    console.log(route);
     if (fs.existsSync(route)) {
       const moduleRoutes = await import(route.replace('./src', '.').replace('./dist', '.'));
       routes.use('/' + module, moduleRoutes.default);

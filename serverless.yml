@@ -1,0 +1,26 @@
+service: testing-lambda-nodejs
+
+provider:
+  name: aws
+  stage: prod
+  runtime: nodejs12.x
+  region: us-east-1
+  memorySize: 128
+  environment:
+    NODE_ENV: production
+
+functions:
+  app:
+    handler: dist/app.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+
+plugins:
+  - serverless-offline
